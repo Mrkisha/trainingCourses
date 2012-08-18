@@ -1,0 +1,36 @@
+[28-Jul-2012 09:59:27 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/uxhausco/public_html/ncsi/API/generate-dialogbox-all.php on line 86
+[29-Jul-2012 23:14:11 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 11
+[29-Jul-2012 23:14:44 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 12
+[29-Jul-2012 23:16:06 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 12
+[29-Jul-2012 23:17:38 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 12
+[29-Jul-2012 23:18:30 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 13
+[29-Jul-2012 23:19:58 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 13
+[29-Jul-2012 23:21:17 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 10
+[29-Jul-2012 23:21:24 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 10
+[29-Jul-2012 23:23:17 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 10
+[29-Jul-2012 23:24:01 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/uxhausco/public_html/ncsi/API/update-finance-task.php on line 10
+[04-Aug-2012 21:21:34 UTC] PHP Parse error:  syntax error, unexpected T_INT_CAST, expecting T_STRING or T_VARIABLE or '{' or '$' in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 27
+[04-Aug-2012 21:22:37 UTC] PHP Parse error:  syntax error, unexpected '(', expecting T_STRING or T_VARIABLE or '{' or '$' in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 27
+[05-Aug-2012 12:27:36 UTC] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 183
+[05-Aug-2012 12:29:07 UTC] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 183
+[05-Aug-2012 12:29:35 UTC] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 183
+[05-Aug-2012 12:55:05 UTC] PHP Parse error:  syntax error, unexpected ';' in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 251
+[05-Aug-2012 12:55:37 UTC] PHP Parse error:  syntax error, unexpected ';' in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 251
+[05-Aug-2012 12:57:04 UTC] PHP Warning:  PDOStatement::execute() [<a href='pdostatement.execute'>pdostatement.execute</a>]: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 263
+[05-Aug-2012 13:21:18 UTC] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 62
+[05-Aug-2012 14:27:06 UTC] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/uxhausco/public_html/ncsi/API/training-other-add-processing.php on line 332
+[08-Aug-2012 13:02:07 UTC] PHP Warning:  mktime() expects parameter 5 to be long, string given in /home/uxhausco/public_html/ncsi/includes/functions.php on line 277
+[08-Aug-2012 13:02:07 UTC] PHP Warning:  mktime() expects parameter 5 to be long, string given in /home/uxhausco/public_html/ncsi/includes/functions.php on line 277
+[08-Aug-2012 19:35:12 UTC] PHP Parse error:  syntax error, unexpected ';' in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 243
+[08-Aug-2012 19:36:04 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 248
+[08-Aug-2012 19:36:15 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 248
+[08-Aug-2012 19:37:48 UTC] PHP Fatal error:  Call to a member function rowCount() on a non-object in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 238
+[08-Aug-2012 19:39:47 UTC] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 238
+[08-Aug-2012 19:40:10 UTC] PHP Fatal error:  Call to a member function rowCount() on a non-object in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 237
+[08-Aug-2012 21:10:48 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/uxhausco/public_html/ncsi/API/training-notes-standard.php on line 5
+[08-Aug-2012 21:27:08 UTC] PHP Parse error:  syntax error, unexpected '.' in /home/uxhausco/public_html/ncsi/API/training-notes-standard.php on line 13
+[08-Aug-2012 21:27:33 UTC] PHP Parse error:  syntax error, unexpected '.' in /home/uxhausco/public_html/ncsi/API/training-notes-standard.php on line 13
+[08-Aug-2012 21:27:34 UTC] PHP Parse error:  syntax error, unexpected '.' in /home/uxhausco/public_html/ncsi/API/training-notes-standard.php on line 13
+[08-Aug-2012 21:31:11 UTC] PHP Fatal error:  Call to a member function fetchAll() on a non-object in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 238
+[08-Aug-2012 21:34:34 UTC] PHP Fatal error:  Call to a member function fetchAll() on a non-object in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 238
+[08-Aug-2012 21:36:14 UTC] PHP Fatal error:  Call to a member function fetchAll() on a non-object in /home/uxhausco/public_html/ncsi/API/generate-dialogbox.php on line 238

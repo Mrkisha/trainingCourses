@@ -22,6 +22,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 <title>Manager - Dashboard</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet" type="text/css" />
 </head>
 
@@ -63,85 +64,96 @@
 	<!-- Content -->
 	
 <!-- Content -->
-    <div class="content">
-    	<div class="title"><h5>Dashboard</h5></div>
-        
-        <!-- Widgets -->
-        <div class="widgets">
-            <div class="left">
-                
-                <!-- Training statistics -->
+	<div class="content">
+		<div class="title"><h5>Dashboard</h5></div>
+		
+		<!-- Widgets -->
+		<div class="widgets">
+			<div class="left">
+				
+				<!-- Training statistics -->
 
-                <div class="widget">
-                    <div class="head"><h5 class="iChart8">Training Overview</h5></div>
-                    <table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
-                        <thead>
-                            <tr>
-                              <td>Description</td>
-                              <td width="21%">Pending</td>
-                              <td width="21%">Overdue</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Public Courses</td>
-                                <td align="center"><strong class="green"><?php echo tasks_pending_training_tasks1 (); ?></strong></td>
-                                <td align="center"><strong class="<?php echo (tasks_overdue_training_tasks1() == 0) ? "green": "red"; ?>"><?php echo tasks_overdue_training_tasks1(); ?></strong></td>
-                            </tr>
-                            <tr>
-                                <td>Onsite Courses</td>
-                                <td align="center"><strong class="green">1</strong></td>
-                                <td align="center"><strong class="red">1</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Standards</td>
-                                <td align="center"><strong class="green"><?php echo tasks_pending_training_tasks2(); ?></strong></td>
-                                <td align="center"><strong class="<?php echo (tasks_overdue_training_tasks2() == 0) ? "green": "red"; ?>"><?php echo tasks_overdue_training_tasks2(); ?></strong></td>
-                            </tr>
-                        </tbody>
-                    </table>                    
-                </div>
-            </div>
-            <div class="right">
+				<div class="widget">
+					<div class="head"><h5 class="iChart8">Training Overview</h5></div>
+					<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
+						<thead>
+							<tr>
+							  <td>Description</td>
+							  <td width="21%">Pending</td>
+							  <td width="21%">Overdue</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Public Courses</td>
+								<td align="center"><strong class="green"><?php echo tasks_pending_training_tasks1 (); ?></strong></td>
+								<td align="center"><strong class="<?php echo (tasks_overdue_training_tasks1() == 0) ? "green": "red"; ?>"><?php echo tasks_overdue_training_tasks1(); ?></strong></td>
+							</tr>
+							<tr>
+								<td>Onsite Courses</td>
+								<td align="center"><strong class="green">1</strong></td>
+								<td align="center"><strong class="red">1</strong></td>
+							</tr>
+							<tr>
+								<td>Standards</td>
+								<td align="center"><strong class="green"><?php echo tasks_pending_training_tasks2(); ?></strong></td>
+								<td align="center"><strong class="<?php echo (tasks_overdue_training_tasks2() == 0) ? "green": "red"; ?>"><?php echo tasks_overdue_training_tasks2(); ?></strong></td>
+							</tr>
+						</tbody>
+					</table>                    
+				</div>
+			</div>
+			<div class="right">
 
-                <!-- Finance statistics -->
+				<!-- Finance statistics -->
 
-                <div class="widget">
-                    <div class="head"><h5 class="iChart8">Finance Overview</h5></div>
-                        <table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
-                        <thead>
-                            <tr>
-                              <td>Description</td>
-                              <td width="21%">Pending</td>
-                              <td width="21%">Overdue</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Raise Invoices</td>
-                                <td align="center"><strong class="green"><?php echo tasks_pending_finance(); ?></strong></td>
-                                <td align="center"><strong class="<?php echo (tasks_overdue_finance() == 0) ? "green": "red"; ?>"><?php echo tasks_overdue_finance (); ?></strong></td>
-                            </tr>
-                            <tr>
-                                <td>Confirm Payments</td>
-                                <td align="center"><strong class="green"><?php echo tasks_pending_finance2(); ?></strong></td>
-                                <td align="center"><strong>-</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Reraise Invoices</td>
-                                <td align="center"><strong class="green">1</strong></td>
-                                <td align="center"><strong class="red">1</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>                    
-                </div>
-            </div>
-        </div>
-
-
-
-
-    </div>
+				<div class="widget">
+					<div class="head"><h5 class="iChart8">Finance Overview</h5></div>
+						<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
+						<thead>
+							<tr>
+							  <td>Description</td>
+							  <td width="21%">Pending</td>
+							  <td width="21%">Overdue</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Raise Invoices</td>
+								<td align="center"><strong class="green"><?php echo tasks_pending_finance(); ?></strong></td>
+								<td align="center"><strong class="<?php echo (tasks_overdue_finance() == 0) ? "green": "red"; ?>"><?php echo tasks_overdue_finance (); ?></strong></td>
+							</tr>
+							<tr>
+								<td>Confirm Payments</td>
+								<td align="center"><strong class="green"><?php echo tasks_pending_finance2(); ?></strong></td>
+								<td align="center"><strong>-</strong></td>
+							</tr>
+							<tr>
+								<td>Reraise Invoices</td>
+								<td align="center"><strong class="green">1</strong></td>
+								<td align="center"><strong class="red">1</strong></td>
+							</tr>
+						</tbody>
+					</table>                    
+				</div>
+			</div>
+		</div>
+		
+		<!-- Sales by month graph -->
+		<div class="widget" style="margin-top: 40px;">
+			<div class="head">
+				<h5 class="iStats">Sales by month</h5>
+				<select name="flotSalesByMonth" id="flotSalesByMonth" style="opacity: 0; ">
+					<option value="1">This Fiscal Year</option>
+					<option value="2">Last Fiscal Year</option>
+				</select>
+			</div>
+			<div class="body">
+				<div id="placeholder" style="width:700px; height:300px"></div>
+			</div>
+		</div>
+		<!-- end of Sales by month graph -->
+	</div><!-- end of content -->
 
 
 	<div class="fix"></div>
@@ -208,9 +220,12 @@
 <script type="text/javascript" src="js/charts/bar.js"></script>
 <script type="text/javascript" src="js/charts/hBar.js"></script>
 <script type="text/javascript" src="js/charts/pie.js"></script>
+<script type="text/javascript" src="js/charts/barar.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function($) {
+		
+		
 		
 
 		var add_class_to_row;
@@ -266,7 +281,7 @@
 		$('#note').live("keydown", function(e){
 			if(e.keyCode == 13){
 				if ($("#allNotes p").length > 0){
- 					$("#allNotes p").remove();
+					$("#allNotes p").remove();
 				}
 				var num_of_notes = $("#allNotes li").length;
 
@@ -278,10 +293,71 @@
 				return false;
 			}
 			
-		});			
+		});
+
+		
 		
 	});
-	
+$("#flotSalesByMonth").change(function(){
+	$.ajax({
+		url: 'API/flotBar.php',
+		data: { option: $(this).val()},
+		type: "POST",
+		dataType: 'json',
+		success: function(data) {
+			$.plot($("#placeholder"), [{
+				data: data, 
+				bars: { 
+					show: true,
+					align:'center', 
+					barWidth: 0.3
+				}
+			}],
+			{
+				xaxis: { 
+					ticks:[[1,'Jul'],[2,'Aug'],[3,'Sep'],[4,'Oct'],[5,'Nov'],[6,'Dec'],[7,'Jan'],[8,'Feb'],[9,'Mar'],[10,'Apr'],[11,'May'],[12,'Jun']]
+				}
+			});			
+		}
+	});
+});
+
+
+	var d1 = [
+		[0, 0],
+		[1, 10], 
+		[2, 2], 
+		[3, 8], 
+		[4, 5], 
+		[5, 13], 
+		[6, 18],
+		[7, 18],
+		[8, 18],
+		[9, 18],
+		[10, 18],
+		[11, 18],
+		[12, 18],
+	];
+
+
+
+	$.plot($("#placeholder"), [								
+		{
+			data: d1, 
+			bars: { 
+				show: true,
+				align:'center', 
+				barWidth: 0.3
+			}
+		}
+	],
+	{
+			xaxis: { 
+				ticks:[[1,'Jul'],[2,'Aug'],[3,'Sep'],[4,'Oct'],[5,'Nov'],[6,'Dec'],[7,'Jan'],[8,'Feb'],[9,'Mar'],[10,'Apr'],[11,'May'],[12,'Jun']]
+			}
+	}
+
+	);
 
 </script>
 </body>

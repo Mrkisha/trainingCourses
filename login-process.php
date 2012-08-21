@@ -26,7 +26,7 @@
 		// set session vars
 		$_SESSION['user']['username'] = $data[0]['username'];
 		$_SESSION['user']['permission'] = $data[0]['permission'];
-				
+		
 		if($data[0]['permission'] == 1 || $data[0]['permission'] == 3){
 			redirect_to('training-public.php');
 		} else {

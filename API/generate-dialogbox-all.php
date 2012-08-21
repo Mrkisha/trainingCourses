@@ -123,20 +123,20 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">Order Total:</td>
-				<td colspan="2">
-				<?php
-					echo "$";
-					echo $data_orders[0]['orderTotal'];
-				?>
-				</td>
-			</tr>
-			<tr>
 				<td colspan="2">GST Included:</td>
 				<td colspan="2">
 				<?php
 					echo "$";
 					echo $data_orders[0]['orderTax'];
+				?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">Order Total:</td>
+				<td colspan="2">
+				<?php
+					echo "$";
+					echo $data_orders[0]['orderTotal'];
 				?>
 				</td>
 			</tr>
@@ -175,6 +175,7 @@
 					<p>
 				<?php
 						echo $data_billing[0]['billingFirstName'] . " " . $data_billing[0]['billingLastName'] . "<br>";
+						echo $data_billing[0]['billingCompany'] . "<br>";
 						echo $data_billing[0]['billingAddress1'] . "<br>";
 						if($data_billing[0]['billingAddress2'] != ''){
 							echo $data_billing[0]['billingAddress2'] . "<br>";

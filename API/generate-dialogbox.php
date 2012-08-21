@@ -24,7 +24,7 @@
 								, `productName`
 							FROM
 								`mod_foxycart_products`
-								WHERE (`productCategory` = 'default' OR `productCategory` = 'gst-exempt' OR `productCategory` = 'rto-units' OR `productCategory` = 'new')
+								WHERE (`productCategory` = 'default' OR `productCategory` = 'gst-exempt' OR `productCategory` = 'rto-units' OR `productCategory` = 'new'OR `productCategory` = 'onsite' OR `productCategory` = 'online' OR `productCategory` = 'workshop' OR `productCategory` = 'rpl')
 								AND (`orderId` = :orderId);");
 	$stm->bindParam(":orderId", $_POST['orderId']);
 	$stm->execute();
@@ -93,8 +93,10 @@
 					echo "<li> <span>Location:</span> <span>{$key['productLocation']}</span> </li>";
 					echo "<li> <span>Start:</span> <span>" . date("d/m/Y H:i", strtotime($key['productStart']))."</span> </li>";
 					echo "<li> <span>End:</span> <span>".date("d/m/Y H:i", strtotime($key['productEnd']))."</span> </li>";
+					/*
 					echo "<li> <span>Code:</span> <span>{$key['productCode']}</span> </li>";
 					echo "<li> <span>Category:</span> <span>{$key['productCategory']}</span> </li>";
+					*/
 
 					// if status = 1 we show Wisinet datetime
 					if($status == 1){
@@ -116,8 +118,8 @@
 
 			?>
 		</tbody>
+	<!--
 		<tfoot>
-
 			<tr>
 				<td colspan="2">Subtotal:</td>
 				<td colspan="2">
@@ -155,6 +157,7 @@
 				</td>
 			</tr>
 		</tfoot>
+	-->
 	</table>
 </div>
 <div class="rightCol">
@@ -189,6 +192,7 @@
 					<p>
 				<?php
 						echo $data_billing[0]['billingFirstName'] . " " . $data_billing[0]['billingLastName'] . "<br>";
+						echo $data_billing[0]['billingCompany'] . "<br>";
 						echo $data_billing[0]['billingAddress1'] . "<br>";
 						if($data_billing[0]['billingAddress2'] != ''){
 							echo $data_billing[0]['billingAddress2'] . "<br>";
@@ -238,7 +242,7 @@
 							$data_notes = $stm_notes->fetchAll(PDO::FETCH_ASSOC);
 							
 							foreach($data_notes as $key){
-								echo "<li>".date("d/m/Y H:i", strtotime($key['noteDate']))." - {$key['note']} <i>".ucfirst($key['username'])."</i></li>";
+								echo "<li>".date("d/m/Y H:i", strtotime($key['noteDate']))." - {$key['note']} <i>by ".ucfirst($key['username'])."</i></li>";
 							}
 							
 						} else {

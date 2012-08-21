@@ -309,7 +309,7 @@
 
 	// insert into onsite 
 		if($productCategory == 'onsite'){
-		for($i = 1; $i <= 7; $i++){
+		for($i = 1; $i <= 10; $i++){
 			$stm_onsite = $db->prepare("INSERT INTO `mod_foxycart_onsite_tasks` 
 											(
 												orderId, 

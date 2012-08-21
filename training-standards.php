@@ -33,21 +33,7 @@
 		<div class="wrapper">
 			<div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span>Hello, <?php echo ucfirst($_SESSION['user']['username']) ?>!</span></div>
 			<div class="userNav">
-				<ul>					
-					<!--
-					<li><a href="#" title=""><img src="images/icons/topnav/profile.png" alt="" /><span>Profile</span></a><
-					<li><a href="#" title=""><img src="images/icons/topnav/tasks.png" alt="" /><span>Tasks</span></a></li>
-					<li class="dd"><a title=""><img src="images/icons/topnav/messages.png" alt="" /><span>Messages</span><span class="numberTop">8</span></a>
-						<ul class="menu_body">
-							<li><a href="#" title="" class="sAdd">new message</a></li>
-							<li><a href="#" title="" class="sInbox">inbox</a></li>
-							<li><a href="#" title="" class="sOutbox">outbox</a></li>
-							<li><a href="#" title="" class="sTrash">trash</a></li>
-						</ul>
-					</li>
-					<li><a href="#" title=""><img src="images/icons/topnav/settings.png" alt="" /><span>Settings</span></a></li>
-				-->
-					
+				<ul>								
 					<li><a href="index.php" title=""><img src="images/icons/topnav/logout.png" alt="" /><span>Logout</span></a></li>
 				</ul>
 			</div>
@@ -66,23 +52,20 @@
 	<div class="fix"></div>
 </div>
 <?php
+	$stm = $db->prepare("SELECT DISTINCT `orderId` FROM `mod_foxycart_training_tasks` WHERE `task` = 2 AND `status` = 0");
+	$stm->execute();
 
+	$pendingTasks = $stm->rowCount();
 
-
-			$stm = $db->prepare("SELECT DISTINCT `orderId` FROM `mod_foxycart_training_tasks` WHERE `task` = 2 AND `status` = 0");
-			$stm->execute();
-
-			$pendingTasks = $stm->rowCount();
-
-			$stm_overdue = $db->prepare("SELECT DISTINCT `orderId`
-											FROM mod_foxycart_training_tasks
-											WHERE  `dateInserted` < DATE_SUB( NOW( ) , INTERVAL 48 HOUR ) AND `task` = 2 AND `status` = 0");
-			$stm_overdue->execute();
-			$overdue = $stm_overdue->rowCount();
-
-		?>
+	$stm_overdue = $db->prepare("SELECT DISTINCT `orderId`
+									FROM mod_foxycart_training_tasks
+									WHERE  `dateInserted` < DATE_SUB( NOW( ) , INTERVAL 48 HOUR ) AND `task` = 2 AND `status` = 0");
+	$stm_overdue->execute();
+	$overdue = $stm_overdue->rowCount();
+?>
 
 <!-- Main wrapper -->
+
 <div class="wrapper"> 
 	<!-- Left navigation -->
 	<?php include 'includes/left-nav.php'; ?>
@@ -112,139 +95,69 @@
 				<h5 class="iFrames">Standards to be sent</h5>
 			</div>
 			<?php
-
-
-
 				$stm = $db->prepare("SELECT DISTINCT
-
 									 `mod_foxycart_customers`.`orderDate`
-
 									 , `mod_foxycart_customers`.`orderId`
-
 									 , `mod_foxycart_orders`.`orderTotal`
-
 									 , `mod_foxycart_customers`.`customerFirstName`
-
 									 , `mod_foxycart_customers`.`customerLastName`
-
 								 FROM `mod_foxycart_orders`
-
 									 INNER JOIN `mod_foxycart_customers` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_customers`.`orderId`)
-
 									 INNER JOIN `mod_foxycart_training_tasks` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_training_tasks`.`orderId`)
-
 								 WHERE (`mod_foxycart_training_tasks`.`task` =2 AND `mod_foxycart_training_tasks`.`status` =0)
-
 								 ORDER BY orderDate ASC
-
 								 ");
 
 				$stm->execute();
-
-
-
 				$data = $stm->fetchAll();
 
-
-
 				if($stm->rowCount() > 0){
-
-				
-
 			?>
 			<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
 				<thead>
 					<tr>
 						<td width="17%">Date</td>
-						<td width="17%">ID</td>
-						<td width="40%">Items</td>
+						<td width="13%">ID</td>
+						<td width="50%">Items</td>
+						<!--
 						<td width="11%">Cost</td>
-						<td width="15%">Customer</td>
+						-->
+						<td width="20%">Customer</td>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-
-					
-
 					foreach($data as $key){
-
 						echo "<tr>";
-
-						echo "<td>{$key['orderDate']}</td>";
-
+						echo "<td>".date("d/m/Y H:i", strtotime($key['orderDate']))."</td>";
 						echo "<td><a href='#' class='opener'>{$key['orderId']}</a></td>";
-
-
 
 						// list all the items in 1 table cell
 
 						echo "<td><div class='list arrowBlue'><ul>";
-
 						$stm_items = $db->prepare("SELECT * FROM `mod_foxycart_products` 
-
 														WHERE `productCategory` = 'standards' 
-
 																AND `orderId`=".$key['orderId']);
-
 						$stm_items->execute();
-
 						$data_items = $stm_items->fetchAll();
 
 						if($stm_items->rowCount() > 0){
-
 							foreach($data_items as $key_items){
-
 								echo "<li>" . $key_items['productName'] . "</li>";
-
 							}
-
 						}
 
 						echo "</ul></div>";
-
-
-
 						echo "</td>";
-
-						echo "<td>\${$key['orderTotal']}</td>";
-
+						//echo "<td>\${$key['orderTotal']}</td>";
 						echo "<td>{$key['customerFirstName']} {$key['customerLastName']}</td>";
-
 						echo "</tr>";
-
 					}
-
 				}
-
 			?>
 				</tbody>
 			</table>
-			
-			<!-- <table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
 
-				<thead>
-
-					<tr>
-
-						<td width="17%">Date</td>
-
-						<td width="17%">ID</td>
-
-						<td width="40%">Items</td>
-
-						<td width="11%">Cost</td>
-
-						<td width="15%">Customer</td>
-
-					</tr>
-
-				</thead>
-
-				<tbody>
-				</tbody>
-
-			</table> --> 
 			
 		</div>
 	</div>
@@ -333,7 +246,7 @@
 			var clicked = $(this);
 			$.post("API/update-task-standards.php", {taskID: $(this).next().val()}, function(data){
 				clicked.fadeOut();
-				clicked.parent().prev().prev().find("ul").append("<li class='justAdded'><span>Date Standard Sent:</span> <span>" + data + "</span> </li>");
+				clicked.parent().prev().prev().find("ul").append("<li class='justAdded'><span>Standard Sent:</span> <span>" + data + "</span> </li>");
 				clicled.remove();
 				$(".blueBtn").lenght();
 			});

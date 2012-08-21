@@ -48,8 +48,16 @@
 			break;
 
 		case '2':
-			$sql_flotSalesByMonth = '';
-			break;
+			$json_data[] = array(0, 0);
+			for($i=1; $i <= 12; $i++){
+				$json_data[] = array(
+					(int)$i, 
+					(int)0
+				);
+			}
+			echo json_encode($json_data);
+			//break;
+			die;
 
 	}
 
@@ -58,6 +66,7 @@
 	$data_flotSalesByMonth = $stm_flotSalesByMonth->fetchAll(PDO::FETCH_ASSOC);
 
 	$counter = 1;
+	$json_data[] = array(0, 0);
 	foreach($data_flotSalesByMonth as $key){
 		$json_data[] = array(
 			(int)$counter, 

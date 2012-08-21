@@ -1,21 +1,20 @@
 <?php
 
-	session_start();
+    session_start();
 
-	require 'includes/database.php';
-	require 'includes/functions.php';
+    require 'includes/database.php';
+    require 'includes/functions.php';
 
-	permission();
+    permission();
 
-	// set the page var to training, finance of manager
-	// so the middle nav links could be properly highlighted
-	// depending on what page you're on
-	$page = 'finance';
+    // set the page var to training, finance of manager
+    // so the middle nav links could be properly highlighted
+    // depending on what page you're on
+    $page = 'finance';
 
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -81,33 +80,6 @@
 			<div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span>Hello, <?php echo ucfirst($_SESSION['user']['username']) ?>!</span></div>
 			<div class="userNav">
 				<ul>
-					
-					<!--
-
-					<li><a href="#" title=""><img src="images/icons/topnav/profile.png" alt="" /><span>Profile</span></a></li>
-
-					<li><a href="#" title=""><img src="images/icons/topnav/tasks.png" alt="" /><span>Tasks</span></a></li>
-
-					<li class="dd"><a title=""><img src="images/icons/topnav/messages.png" alt="" /><span>Messages</span><span class="numberTop">8</span></a>
-
-						<ul class="menu_body">
-
-							<li><a href="#" title="" class="sAdd">new message</a></li>
-
-							<li><a href="#" title="" class="sInbox">inbox</a></li>
-
-							<li><a href="#" title="" class="sOutbox">outbox</a></li>
-
-							<li><a href="#" title="" class="sTrash">trash</a></li>
-
-						</ul>
-
-					</li>
-
-					<li><a href="#" title=""><img src="images/icons/topnav/settings.png" alt="" /><span>Settings</span></a></li>
-
-				-->
-					
 					<li><a href="login.html" title=""><img src="images/icons/topnav/logout.png" alt="" /><span>Logout</span></a></li>
 				</ul>
 			</div>
@@ -120,24 +92,23 @@
 
 <div id="header" class="wrapper">
 	<div class="logo"><a href="/" title=""><img src="images/ncsiLogo.png" alt="" /></a></div>
-	<!-- middle nav start -->
-	<?php require 'includes/middle-nav.php'; ?>
-	<!-- middle nav end -->
+    <!-- middle nav start -->
+    <?php require 'includes/middle-nav.php'; ?>
+    <!-- middle nav end -->
 	<div class="fix"></div>
 </div>
+
 <?php
+    $stm = $db->prepare("SELECT DISTINCT `orderId` FROM `mod_foxycart_finance_tasks` WHERE `task` = 2 AND `status` = 0");
+    $stm->execute();
 
-			$stm = $db->prepare("SELECT DISTINCT `orderId` FROM `mod_foxycart_finance_tasks` WHERE `task` = 2 AND `status` = 0");
-			$stm->execute();
+    $pendingTasks = $stm->rowCount();
+?>
 
-			$pendingTasks = $stm->rowCount();
-
-		?>
 <div class="wrapper"> 
 	
 	<!-- Left navigation -->
-	<?php include 'includes/left-nav.php'; ?>
-	<!-- Left navigation -->
+    <?php include 'includes/left-nav.php'; ?>
 	
 	<!-- Content -->
 	
@@ -146,14 +117,14 @@
 			<h5>Confirm Payments</h5>
 		</div>
 		
-		<!-- Statistics -->
-		
-		<div class="stats">
-			<ul>
-				<li><a href="#" class="count blue" title=""><?php echo $pendingTasks; ?></a><span>new pending tasks</span></li>
-			</ul>
-			<div class="fix"></div>
-		</div>
+        <!-- Statistics -->
+        
+        <div class="stats">
+            <ul>
+                <li><a href="#" class="count blue" title=""><?php echo $pendingTasks; ?></a><span>new pending tasks</span></li>
+            </ul>
+            <div class="fix"></div>
+        </div>
 		
 		<div class="widget first">
 			<div class="table">
@@ -161,113 +132,69 @@
 				<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 					<thead>
 						<tr>
-							<th>Date</th>
-							<th>ID</th>
-							<th>Items</th>
-							<th>Cost</th>
-							<th>Customer</th>
-							<th>Invoice #</th>
+							<th width="17%">Date</th>
+							<th width="11%">ID</th>
+							<th width="40%">Items</th>
+							<th width="8%">Cost</th>
+							<th width="15%">Customer</th>
+							<th width="9%">Inv #</th>
 						</tr>
 					</thead>
 					<?php
 
+                $stm = $db->prepare("SELECT DISTINCT
+                                     `mod_foxycart_customers`.`orderDate`
+                                     , `mod_foxycart_customers`.`orderId`
+                                     , `mod_foxycart_orders`.`orderTotal`
+                                     , `mod_foxycart_orders`.`invoiceNumber`
+                                     , `mod_foxycart_customers`.`customerFirstName`
+                                     , `mod_foxycart_customers`.`customerLastName`
+                                 FROM `mod_foxycart_orders`
+                                     INNER JOIN `mod_foxycart_customers` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_customers`.`orderId`)
+                                     INNER JOIN `mod_foxycart_finance_tasks` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_finance_tasks`.`orderId`)
+                                 WHERE (`mod_foxycart_finance_tasks`.`task` =2 AND `mod_foxycart_finance_tasks`.`status` =0)
+                                 ORDER BY orderDate DESC
+                                 ");
 
+                $stm->execute();
+                $data = $stm->fetchAll();
 
-				$stm = $db->prepare("SELECT DISTINCT
+                if($stm->rowCount() > 0){
 
-									 `mod_foxycart_customers`.`orderDate`
-
-									 , `mod_foxycart_customers`.`orderId`
-
-									 , `mod_foxycart_orders`.`orderTotal`
-
-									 , `mod_foxycart_orders`.`invoiceNumber`
-
-									 , `mod_foxycart_customers`.`customerFirstName`
-
-									 , `mod_foxycart_customers`.`customerLastName`
-
-								 FROM `mod_foxycart_orders`
-
-									 INNER JOIN `mod_foxycart_customers` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_customers`.`orderId`)
-
-									 INNER JOIN `mod_foxycart_finance_tasks` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_finance_tasks`.`orderId`)
-
-								 WHERE (`mod_foxycart_finance_tasks`.`task` =2 AND `mod_foxycart_finance_tasks`.`status` =0)
-
-								 ORDER BY orderDate ASC
-
-								 ");
-
-				$stm->execute();
-
-
-
-				$data = $stm->fetchAll();
-
-
-
-				if($stm->rowCount() > 0){
-
-				
-
-			?>
+            ?>
 					<tbody>
 						<?php
 
-					
+                    foreach($data as $key){
 
-					foreach($data as $key){
+                        echo "<tr class='gradeA'>";
+                        echo "<td>".date("d/m/Y H:i", strtotime($key['orderDate']))."</td>";
+                        echo "<td><a href='#' class='opener'>{$key['orderId']}</a></td>";
 
-						echo "<tr class='gradeA'>";
+                        // list all the items in 1 table cell
 
-						echo "<td>{$key['orderDate']}</td>";
+                        echo "<td><div class='list arrowBlue'><ul>";
+                        $stm_items = $db->prepare("SELECT * FROM `mod_foxycart_products` 
+                                                        WHERE `orderId`=".$key['orderId']);
+                        $stm_items->execute();
 
-						echo "<td><a href='#' class='opener'>{$key['orderId']}</a></td>";
+                        $data_items = $stm_items->fetchAll();
 
+                        if($stm_items->rowCount() > 0){
+                            foreach($data_items as $key_items){
+                                echo "<li>" . $key_items['productName'] . "</li>";
+                            }
+                        }
 
-
-						// list all the items in 1 table cell
-
-						echo "<td><div class='list arrowBlue'><ul>";
-
-						$stm_items = $db->prepare("SELECT * FROM `mod_foxycart_products` 
-
-														WHERE `orderId`=".$key['orderId']);
-
-						$stm_items->execute();
-
-						$data_items = $stm_items->fetchAll();
-
-						if($stm_items->rowCount() > 0){
-
-							foreach($data_items as $key_items){
-
-								echo "<li>" . $key_items['productName'] . "</li>";
-
-							}
-
-						}
-
-						echo "</ul></div>";
-
-
-
-						echo "</td>";
-
-						echo "<td>\${$key['orderTotal']}</td>";
-
-						echo "<td>{$key['customerFirstName']} {$key['customerLastName']}</td>";
-
-						echo "<td>{$key['invoiceNumber']}</td>";
-
-						echo "</tr>";
-
-					}
-
-				}
-
-			?>
+                        echo "</ul></div>";
+                        echo "</td>";
+                        echo "<td>\${$key['orderTotal']}</td>";
+                        echo "<td>{$key['customerFirstName']} {$key['customerLastName']}</td>";
+                        echo "<td>{$key['invoiceNumber']}</td>";
+                        echo "</tr>";
+                    }
+                }
+            ?>
 					</tbody>
 				</table>
 			</div>
@@ -285,63 +212,63 @@
 	<div id="dialog-message" title="Course details"> </div>
 </div>
 <script type="text/javascript">
-	$(document).ready(function($) {
+    $(document).ready(function($) {
 
 
-		var orderId;
-		$('.opener').live("click", function(){
-			orderId = $(this).text();
-			add_class_to_row = $(this).parent().parent();
-			$.post("API/generate-dialogbox-confirm-payments.php",  {orderId: $(this).text()}, function(data){
-				console.log(data);
-				$("#dialog-message").empty();
-				$("#dialog-message").append(data);
-				$("#dialog-message").dialog("open");
-				
-				$("#date").click(function(){
-					$("#date").datepicker().datepicker( "show" );             
-					//alert(1);
-				});
-			});
-			return false;
-		});
+        var orderId;
+        $('.opener').live("click", function(){
+            orderId = $(this).text();
+            add_class_to_row = $(this).parent().parent();
+            $.post("API/generate-dialogbox-confirm-payments.php",  {orderId: $(this).text()}, function(data){
+                console.log(data);
+                $("#dialog-message").empty();
+                $("#dialog-message").append(data);
+                $("#dialog-message").dialog("open");
+                
+                $("#date").click(function(){
+                    $("#date").datepicker().datepicker( "show" );             
+                    //alert(1);
+                });
+            });
+            return false;
+        });
 
-		
-		$('#ui-datepicker-div').css('clip', 'auto');
+        
+        $('#ui-datepicker-div').css('clip', 'auto');
 
-		$(".blueBtn").live("click", function(){
-			var orderid = $('input[name="Id"]').val();
-			var orderButton = $(this);
-			var toBeRemoved = orderButton.parent().parent().parent().parent().parent();
-			
-			$.post("API/update-finance-payments-tasks.php", {orderID: orderid, invoiceDate: $('input[name="invoiceDate"]').val()}, function(data_task){
-				console.log(data_task);
-				toBeRemoved.remove();
-				$(".fc_details tfoot").append("<tr><td colspan='2'>Payment Date:</td><td colspan='2'>" + data_task + "</td></tr>");
+        $(".blueBtn").live("click", function(){
+            var orderid = $('input[name="Id"]').val();
+            var orderButton = $(this);
+            var toBeRemoved = orderButton.parent().parent().parent().parent().parent();
+            
+            $.post("API/update-finance-payments-tasks.php", {orderID: orderid, invoiceDate: $('input[name="invoiceDate"]').val()}, function(data_task){
+                console.log(data_task);
+                toBeRemoved.remove();
+                $(".fc_details tfoot").append("<tr><td colspan='2'>Payment Date:</td><td colspan='2'>" + data_task + "</td></tr>");
 
-				add_class_to_row.removeClass("gradeA").addClass("gradeC");
+                add_class_to_row.removeClass("gradeA").addClass("gradeC");
 
-			});
-			return false;
-		});
+            });
+            return false;
+        });
 
-		// submiting notes to db        
-		$('#note').live("keydown", function(e){
-			if(e.keyCode == 13){
-				if ($("#allNotes p").length > 0){
-					$("#allNotes p").remove();
-				}
+        // submiting notes to db        
+        $('#note').live("keydown", function(e){
+            if(e.keyCode == 13){
+                if ($("#allNotes p").length > 0){
+                    $("#allNotes p").remove();
+                }
 
-				$.post("API/training-notes-standard.php", {note: $('#note').val(), orderId: orderId}, function(notes){
-					console.log(notes);
-					$("#allNotes ul").append(notes);
-					$("#note").val("");
-				});
-				return false;
-			}
-			
-		});     
-	});
+                $.post("API/training-notes-standard.php", {note: $('#note').val(), orderId: orderId}, function(notes){
+                    console.log(notes);
+                    $("#allNotes ul").append(notes);
+                    $("#note").val("");
+                });
+                return false;
+            }
+            
+        });     
+    });
 </script>
 </body>
 </html>

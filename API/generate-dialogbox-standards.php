@@ -89,8 +89,10 @@
 					echo "<td><span><strong>{$key['productName']}</strong></span>";
 					echo "<div class=\"list arrowBlue\">";
 					echo "<ul>";
+					/*
 					echo "<li> <span>Code:</span> <span>{$key['productCode']}</span> </li>";
 					echo "<li> <span>Category:</span> <span>{$key['productCategory']}</span> </li>";
+					*/
 					echo "</ul></div></td>";
 					echo "<td>{$key['productQuantity']}</td>";
 					$price_total = $key['productPrice'] * $key['productQuantity'];
@@ -107,8 +109,8 @@
 
 			?>
 		</tbody>
+		<!--
 		<tfoot>
-
 			<tr>
 				<td colspan="2">Subtotal:</td>
 				<td colspan="2">
@@ -146,6 +148,7 @@
 				</td>
 			</tr>
 		</tfoot>
+	-->
 	</table>
 </div>
 <div class="rightCol">
@@ -180,6 +183,7 @@
 					<p>
 				<?php
 						echo $data_billing[0]['billingFirstName'] . " " . $data_billing[0]['billingLastName'] . "<br>";
+						echo $data_billing[0]['billingCompany'] . "<br>";
 						echo $data_billing[0]['billingAddress1'] . "<br>";
 						if($data_billing[0]['billingAddress2'] != ''){
 							echo $data_billing[0]['billingAddress2'] . "<br>";
@@ -229,7 +233,7 @@
 							$data_notes = $stm_notes->fetchAll(PDO::FETCH_ASSOC);
 							
 							foreach($data_notes as $key){
-								echo "<li>".date("d/m/Y H:i", strtotime($key['noteDate']))." - {$key['note']} <i>".ucfirst($key['username'])."</i></li>";
+								echo "<li>".date("d/m/Y H:i", strtotime($key['noteDate']))." - {$key['note']} <i>by ".ucfirst($key['username'])."</i></li>";
 							}
 							
 						} else {

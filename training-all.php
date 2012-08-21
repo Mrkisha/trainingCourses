@@ -82,39 +82,6 @@
 			<div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span>Hello, <?php echo ucfirst($_SESSION['user']['username']) ?>!</span></div>
 			<div class="userNav">
 				<ul>
-					
-					<!--
-
-
-
-					<li><a href="#" title=""><img src="images/icons/topnav/profile.png" alt="" /><span>Profile</span></a></li>
-
-
-
-					<li><a href="#" title=""><img src="images/icons/topnav/tasks.png" alt="" /><span>Tasks</span></a></li>
-
-
-
-					<li class="dd"><a title=""><img src="images/icons/topnav/messages.png" alt="" /><span>Messages</span><span class="numberTop">8</span></a>
-
-
-
-						<ul class="menu_body">
-
-
-
-							<li><a href="#" title="" class="sAdd">new message</a></li>
-							<li><a href="#" title="" class="sInbox">inbox</a></li>
-							<li><a href="#" title="" class="sOutbox">outbox</a></li>
-							<li><a href="#" title="" class="sTrash">trash</a></li>
-						</ul>
-					</li>
-					<li><a href="#" title=""><img src="images/icons/topnav/settings.png" alt="" /><span>Settings</span></a></li>
-
-
-
-				-->
-					
 					<li><a href="index.php" title=""><img src="images/icons/topnav/logout.png" alt="" /><span>Logout</span></a></li>
 				</ul>
 			</div>
@@ -148,10 +115,7 @@
 			<h5>All Bookings</h5>
 		</div>
 		
-		
-
-		
-		<!-- Static table -->
+		<!-- Dynamic table -->
 		<div class="widget first">
 			<div class="table">
 			<div class="head"></div>
@@ -166,7 +130,7 @@
 									 , `mod_foxycart_customers`.`customerLastName`
 								 FROM `mod_foxycart_orders`
 									 INNER JOIN `mod_foxycart_customers` ON (`mod_foxycart_orders`.`orderId` = `mod_foxycart_customers`.`orderId`)
-								 ORDER BY orderDate ASC
+								 ORDER BY orderDate DESC
 								 ");
 				$stm->execute();
 
@@ -178,11 +142,11 @@
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<th>Date</th>
-						<th>ID</th>
-						<th>Items</th>
-						<th>Cost</th>
-						<th>Customer</th>
+						<th width="17%">Date</th>
+						<th width="13%">ID</th>
+						<th width="40%">Items</th>
+						<th width="10%">Cost</th>
+						<th width="20%">Customer</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -190,7 +154,7 @@
 					
 					foreach($data as $key){
 						echo "<tr class='gradeA'>";
-						echo "<td>{$key['orderDate']}</td>";
+						echo "<td>".date("d/m/Y H:i", strtotime($key['orderDate']))."</td>";
 						echo "<td><a href='#' class='opener'>{$key['orderId']}</a></td>";
 
 						// list all the items in 1 table cell
@@ -215,19 +179,6 @@
 			?>
 		</tbody>
 			</table>
-			<!-- <table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
-				<thead>
-					<tr>
-						<td width="17%">Date</td>
-						<td width="17%">ID</td>
-						<td width="40%">Items</td>
-						<td width="11%">Cost</td>
-						<td width="15%">Customer</td>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table> -->
 		</div>
 		</div>
 	</div>

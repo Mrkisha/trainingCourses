@@ -138,14 +138,16 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="fix"></div>
 		
 		<!-- Sales by month graph -->
-		<div class="widget" style="margin-top: 40px;">
+		<div class="widget">
 			<div class="head">
 				<h5 class="iStats">Sales by month</h5>
-				<select name="flotSalesByMonth" id="flotSalesByMonth" style="opacity: 0; ">
-					<option value="1">This Fiscal Year</option>
-					<option value="2">Last Fiscal Year</option>
+				<select name="flotSalesByMonth" id="flotSalesByMonth" style="opacity: 0; " class="floatRight">
+					<option value="1">This Financial Year</option>
+					<option value="2">Last Financial Year</option>
 				</select>
 			</div>
 			<div class="body">
@@ -298,10 +300,11 @@
 		
 		
 	});
-$("#flotSalesByMonth").change(function(){
+
+	//on load, show default graph for Sales by month
 	$.ajax({
 		url: 'API/flotBar.php',
-		data: { option: $(this).val()},
+		data: { option: $("#flotSalesByMonth").val()},
 		type: "POST",
 		dataType: 'json',
 		success: function(data) {
@@ -316,49 +319,94 @@ $("#flotSalesByMonth").change(function(){
 			{
 				xaxis: { 
 					ticks:[[1,'Jul'],[2,'Aug'],[3,'Sep'],[4,'Oct'],[5,'Nov'],[6,'Dec'],[7,'Jan'],[8,'Feb'],[9,'Mar'],[10,'Apr'],[11,'May'],[12,'Jun']]
-				}
+				},
+				grid:{ hoverable: true }
 			});			
 		}
 	});
-});
 
 
-	var d1 = [
-		[0, 0],
-		[1, 10], 
-		[2, 2], 
-		[3, 8], 
-		[4, 5], 
-		[5, 13], 
-		[6, 18],
-		[7, 18],
-		[8, 18],
-		[9, 18],
-		[10, 18],
-		[11, 18],
-		[12, 18],
-	];
+	// on dorp box change, change the data for graph
+	$("#flotSalesByMonth").change(function(){
+		$.ajax({
+			url: 'API/flotBar.php',
+			data: { option: $(this).val()},
+			type: "POST",
+			dataType: 'json',
+			success: function(data) {
+				$.plot($("#placeholder"), [{
+					data: data, 
+					bars: { 
+						show: true,
+						align:'center', 
+						barWidth: 0.3
+					}
+				}],
+				{
+					xaxis: { 
+						ticks:[[1,'Jul'],[2,'Aug'],[3,'Sep'],[4,'Oct'],[5,'Nov'],[6,'Dec'],[7,'Jan'],[8,'Feb'],[9,'Mar'],[10,'Apr'],[11,'May'],[12,'Jun']]
+					},
 
-
-
-	$.plot($("#placeholder"), [								
-		{
-			data: d1, 
-			bars: { 
-				show: true,
-				align:'center', 
-				barWidth: 0.3
+					grid: { hoverable: true }
+				});			
 			}
-		}
-	],
-	{
-			xaxis: { 
-				ticks:[[1,'Jul'],[2,'Aug'],[3,'Sep'],[4,'Oct'],[5,'Nov'],[6,'Dec'],[7,'Jan'],[8,'Feb'],[9,'Mar'],[10,'Apr'],[11,'May'],[12,'Jun']]
-			}
+		});
+	});
+
+	
+	//tooltip function
+	function showTooltip(x, y, contents, areAbsoluteXY) {
+		var rootElt = 'body';
+	
+		$('<div id="tooltip2" class="tooltip">' + contents + '</div>').css( {
+			position: 'absolute',
+			display: 'none',
+			top: y - 35,
+			left: x - 5,
+			border: '1px solid #000',
+			padding: '1px 6px',
+			'z-index': '9999',
+			'background-color': '#202020',
+			'color': '#fff',
+			'font-size': '11px',
+			'border-radius': '2px',
+			'-webkit-border-radius': '2px',
+			'-moz-border-radius': '2px',
+			opacity: 0.8
+		}).prependTo(rootElt).show();
 	}
 
-	);
-
+	//add tooltip event
+$("#placeholder").bind("plothover", function (event, pos, item) {
+	if (item) {
+		if (previousPoint != item.datapoint) {
+			previousPoint = item.datapoint;
+ 
+			//delete de prГ©cГ©dente tooltip
+			$('.tooltip').remove();
+ 
+			var x = item.datapoint[0];
+ 
+			//All the bars concerning a same x value must display a tooltip with this value and not the shifted value
+			if(item.series.bars.order){
+				for(var i=0; i < item.series.data.length; i++){
+					if(item.series.data[i][3] == item.datapoint[0])
+						x = item.series.data[i][0];
+				}
+			}
+ 
+			var y = item.datapoint[1];
+ 
+			showTooltip(item.pageX+5, item.pageY+5,y);
+ 
+		}
+	}
+	else {
+		$('.tooltip').remove();
+		previousPoint = null;
+	}
+ 
+});
 </script>
 </body>
 </html>

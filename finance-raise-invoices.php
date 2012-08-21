@@ -17,7 +17,6 @@
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -36,40 +35,7 @@
 		<div class="wrapper">
 			<div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span>Hello, <?php echo ucfirst($_SESSION['user']['username']) ?>!</span></div>
 			<div class="userNav">
-				<ul>
-					
-					<!--
-
-
-
-					<li><a href="#" title=""><img src="images/icons/topnav/profile.png" alt="" /><span>Profile</span></a></li>
-
-
-
-					<li><a href="#" title=""><img src="images/icons/topnav/tasks.png" alt="" /><span>Tasks</span></a></li>
-
-
-
-					<li class="dd"><a title=""><img src="images/icons/topnav/messages.png" alt="" /><span>Messages</span><span class="numberTop">8</span></a>
-
-
-
-						<ul class="menu_body">
-
-
-
-							<li><a href="#" title="" class="sAdd">new message</a></li>
-							<li><a href="#" title="" class="sInbox">inbox</a></li>
-							<li><a href="#" title="" class="sOutbox">outbox</a></li>
-							<li><a href="#" title="" class="sTrash">trash</a></li>
-						</ul>
-					</li>
-					<li><a href="#" title=""><img src="images/icons/topnav/settings.png" alt="" /><span>Settings</span></a></li>
-
-
-
-				-->
-					
+				<ul>		
 					<li><a href="index.php" title=""><img src="images/icons/topnav/logout.png" alt="" /><span>Logout</span></a></li>
 				</ul>
 			</div>
@@ -88,32 +54,24 @@
 	<div class="fix"></div>
 </div>
 <?php
+	$stm = $db->prepare("SELECT DISTINCT `orderId` FROM `mod_foxycart_finance_tasks` WHERE `task` = 1 AND `status` = 0");
+	$stm->execute();
 
-			$stm = $db->prepare("SELECT DISTINCT `orderId` FROM `mod_foxycart_finance_tasks` WHERE `task` = 1 AND `status` = 0");
-			$stm->execute();
+	$pendingTasks = $stm->rowCount();
 
-			$pendingTasks = $stm->rowCount();
+	$stm_overdue = $db->prepare("SELECT DISTINCT `orderId`
+									FROM mod_foxycart_finance_tasks
+									WHERE  `dateInserted` < DATE_SUB( NOW( ) , INTERVAL 48 HOUR ) AND `task` = 1 AND `status` = 0");
+	$stm_overdue->execute();
+	$overdue = $stm_overdue->rowCount();
+?>
 
-			$stm_overdue = $db->prepare("SELECT DISTINCT `orderId`
-											FROM mod_foxycart_finance_tasks
-											WHERE  `dateInserted` < DATE_SUB( NOW( ) , INTERVAL 48 HOUR ) AND `task` = 1 AND `status` = 0");
-			$stm_overdue->execute();
-			$overdue = $stm_overdue->rowCount();
-
-		// Get the number of courses that need to be entered into Wisenet
-/*
-		$sql = "SELECT * FROM `mod_foxycart_training_tasks` WHERE `task`=1 AND `status`=0";
-		$result = mysql_query($sql);
-		$pendingTasks = mysql_num_rows($result);
-*/
-		?>
 <!-- Main wrapper -->
 
 <div class="wrapper"> 
 	
 	<!-- Left navigation -->
 	<?php include 'includes/left-nav.php'; ?>
-	<!-- Left navigation -->
 
 	<!-- Content -->
 	
@@ -163,10 +121,10 @@
 				<thead>
 				<tr>
 					<td width="17%">Date</td>
-					<td width="17%">ID</td>
+					<td width="13%">ID</td>
 					<td width="40%">Items</td>
-					<td width="11%">Cost</td>
-					<td width="15%">Customer</td>
+					<td width="10%">Cost</td>
+					<td width="20%">Customer</td>
 				</tr>
 				</thead>
 				<tbody>
@@ -174,7 +132,7 @@
 					
 					foreach($data as $key){
 						echo "<tr>";
-						echo "<td>{$key['orderDate']}</td>";
+						echo "<td>".date("d/m/Y H:i", strtotime($key['orderDate']))."</td>";
 						echo "<td><a href='#' class='opener'>{$key['orderId']}</a></td>";
 
 						// list all the items in 1 table cell

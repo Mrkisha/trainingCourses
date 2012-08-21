@@ -64,15 +64,8 @@
 <div class="wrapper"> 
 	
 	<!-- Left navigation -->
-	
-	<div class="leftNav">
-		<ul id="menu">
-			<li class="tables"><a href="tables.html" title="" class="active"><span>Public Courses</span><span class="numberLeft"><?php echo $overdue; ?></span></a></li>
-			<li class="tables"><a href="tables.html" title=""><span>Onsite Courses</span></a></li>
-			<li class="tables"><a href="tables.html" title=""><span>Standards</span></a></li>
-			<li class="tables"><a href="tables.html" title=""><span>All Bookings</span></a></li>
-		</ul>
-	</div>
+	<?php include 'includes/left-nav.php'; ?>
+	<!-- Left navigation -->
 	
 	<!-- Content -->
 	
@@ -445,6 +438,8 @@
 				 <fieldset class="step" id="fourth">
 					<h5>Order Details - 4 of 4</h5>
 
+					<!--
+
 					<div class="rowElem noborder">
 						<label>Item Name:</label>
 						<div class="formRight">
@@ -477,6 +472,8 @@
 						<div class="fix"></div>
 					</div>
 
+
+
 					<div class="rowElem">
 						<label>Order Total:</label>
 						<div class="formRight">
@@ -492,6 +489,8 @@
 						</div>
 						<div class="fix"></div>
 					</div>
+
+									-->
 
 					<div class="rowElem">
 						<label>Raise Invoice:</label>
@@ -608,6 +607,9 @@
 
 			}
 		});
+		
+		$("#menu:eq(2)").children().addClass("active");
+/*
 		$("#productCategory").change(function(){
 			if($("#productCategory option:selected").val() != ''){
 				$("#productCategoryReview").val($("#productCategory option:selected").text());
@@ -679,6 +681,8 @@
 			}
 			$("#orderTax").val(sumTax);
 		});
+
+*/
 
 
 

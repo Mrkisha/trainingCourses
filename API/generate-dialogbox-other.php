@@ -66,9 +66,7 @@
 	<table border="1" cellpadding="0" cellspacing="0" class="fc_details">
 		<thead>
 			<tr>
-				<th width="279"><span>Item</span></th>
-				<th width="48"><span>Qty</span></th>
-				<th width="92"><span>Price</span></th>
+				<th colspan="2"><span>Onsite Course Tasks</span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -87,20 +85,31 @@
 					$data_onsite = $stm_onsite->fetchAll(PDO::FETCH_ASSOC);
 
 					echo "<tr>";
-					echo "<td><span><strong>{$key['productName']}</strong></span>";
+					echo "<td colspan=\"2\"><span><strong>{$key['productName']}</strong></span>";
 					echo "<div class=\"list arrowBlue\">";
 					echo "<ul id='otherTasks'>";
 
 					// create list of onsite tasks
 					foreach($data_onsite as $site){
+						$taskName = '';
+						if ($site['task'] == 1) { $taskName = 'Save MOU to WSS'; }
+						elseif ($site['task'] == 2) { $taskName = 'Create Work Order & Logistics Checklist'; }
+						elseif ($site['task'] == 3) { $taskName = 'Send trainer Work Order & Client Notes'; }
+						elseif ($site['task'] == 4) { $taskName = 'Call client – materials address & next steps'; }
+						elseif ($site['task'] == 5) { $taskName = 'Order & send materials'; }
+						elseif ($site['task'] == 6) { $taskName = 'Client - 1 week confirmation call'; }
+						elseif ($site['task'] == 7) { $taskName = 'Trainer – 3 day confirmation call'; }
+						elseif ($site['task'] == 8) { $taskName = 'Post course – trainer pack compliant & saved'; }
+						elseif ($site['task'] == 9) { $taskName = 'Post course – client follow up * cert confirmation'; }
+						elseif ($site['task'] == 10) { $taskName = 'Finish Task'; }
 						if($site['status'] == 0){
 							echo "<li>
-										Task {$site['task']} <a href='#' class='onSite'>Task complete</a>
+										{$site['task']}. {$taskName} <a href='#' class='onSite'>Complete</a>
 										<input type='hidden' name='siteId' value='{$site['Id']}'>
 									</li>";
 						} else {
 							echo "<li>
-										Task {$site['task']} 
+										{$site['task']}. {$taskName}
 										<span>".date("d-m-Y H:i", strtotime($site['dateCompleted']))."</span>
 									</li>";
 						}
@@ -114,8 +123,8 @@
 		<tfoot>
 
 			<tr>
-				<td colspan="2">Subtotal:</td>
-				<td colspan="2">
+				<td>Subtotal:</td>
+				<td>
 				<?php
 					echo "$";
 					echo $data_orders[0]['orderTotal'] - $data_orders[0]['discountAmount'];
@@ -123,8 +132,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">Discounts:</td>
-				<td colspan="2">
+				<td>Discounts:</td>
+				<td>
 				<?php
 					echo "$";
 					echo $data_orders[0]['discountAmount'];
@@ -132,22 +141,22 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">Order Total:</td>
-				<td colspan="2">
+				<td>GST Included:</td>
+				<td>
+				<?php
+					echo "$";
+					echo $data_orders[0]['orderTax'];
+				?>
+				</td>
+			<tr>
+				<td>Order Total:</td>
+				<td>
 				<?php
 					echo "$";
 					echo $data_orders[0]['orderTotal'];
 				?>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2">GST Included:</td>
-				<td colspan="2">
-				<?php
-					echo "$";
-					echo $data_orders[0]['orderTax'];
-				?>
-				</td>
 			</tr>
 		</tfoot>
 	</table>
@@ -184,6 +193,7 @@
 					<p>
 				<?php
 						echo $data_billing[0]['billingFirstName'] . " " . $data_billing[0]['billingLastName'] . "<br>";
+						echo $data_billing[0]['billingCompany'] . "<br>";
 						echo $data_billing[0]['billingAddress1'] . "<br>";
 						if($data_billing[0]['billingAddress2'] != ''){
 							echo $data_billing[0]['billingAddress2'] . "<br>";

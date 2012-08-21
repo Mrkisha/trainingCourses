@@ -191,6 +191,7 @@
 					<p>
 				<?php
 						echo $data_billing[0]['billingFirstName'] . " " . $data_billing[0]['billingLastName'] . "<br>";
+						echo $data_billing[0]['billingCompany'] . "<br>";
 						echo $data_billing[0]['billingAddress1'] . "<br>";
 						if($data_billing[0]['billingAddress2'] != ''){
 							echo $data_billing[0]['billingAddress2'] . "<br>";
@@ -240,7 +241,7 @@
 							$data_notes = $stm_notes->fetchAll(PDO::FETCH_ASSOC);
 							
 							foreach($data_notes as $key){
-								echo "<li>".date("d/m/Y H:i", strtotime($key['noteDate']))." - {$key['note']} <i>".ucfirst($key['username'])."</i></li>";
+								echo "<li>".date("d/m/Y H:i", strtotime($key['noteDate']))." - {$key['note']} <i>by ".ucfirst($key['username'])."</i></li>";
 							}
 							
 						} else {

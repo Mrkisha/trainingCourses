@@ -260,13 +260,14 @@ $(function() {
 
 			rules: {
 
+
 				customerFirstName: "required",
 
 				customerLastName: "required",
 
 				customerAddress1: "required",
 
-				customerSuburb: "required",
+				customerCity: "required",
 
 				customerState: "required",
 
@@ -284,7 +285,7 @@ $(function() {
 
 				billingAddress1: "required",
 
-				billingSuburb: "required",
+				billingCity: "required",
 
 				billingState: "required",
 
@@ -294,13 +295,19 @@ $(function() {
 
 				productName: "required",
 
-				productCode: "required",
+				productQuantity: "required",
+
+				productPrice: "required",
 
 				productLocation: "required",
 
 				productCategory2: "required",
 
 				productName2: "required",
+
+				productQuantity2: "required",
+
+				productPrice2: "required",
 
 				productCode2: "required",
 
@@ -320,9 +327,13 @@ $(function() {
 
 				}
 
+				
+
 			},
 
 			messages: {
+
+
 
 				customerFirstName: "This field is required",
 
@@ -330,7 +341,7 @@ $(function() {
 
 				customerAddress1: "This field is required",
 
-				customerSuburb: "This field is required",
+				customerCity: "This field is required",
 
 				customerState: "This field is required",
 
@@ -348,7 +359,7 @@ $(function() {
 
 				billingAddress1: "This field is required",
 
-				billingSuburb: "This field is required",
+				billingCity: "This field is required",
 
 				billingState: "This field is required",
 
@@ -358,13 +369,19 @@ $(function() {
 
 				productName: "This field is required",
 
-				productCode: "This field is required",
+				productQuantity: "This field is required",
+
+				productPrice: "This field is required",
 
 				productLocation: "This field is required",
 
 				productCategory2: "Oops, required!",
 
 				productName2: "This field is required",
+
+				productQuantity2: "This field is required",
+
+				productPrice2: "This field is required",
 
 				productCode2: "This field is required",
 
@@ -384,13 +401,13 @@ $(function() {
 
 				}
 
+
+
 			}
 
 		}
 
-	 }
-
-	);
+	 });
 
 
 
@@ -419,10 +436,6 @@ $(function() {
 		}
 
 	});
-
-
-
-	
 
 	
 
@@ -842,9 +855,13 @@ $(function() {
 
 		's1': {decimals:0},
 
+		's1_2': {decimals:0},
+
 		's2': {stepping: 0.25},
 
 		's3': {currency: '$'},
+
+		's3_2': {currency: '$'},
 
 		's4': {},
 

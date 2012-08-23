@@ -467,32 +467,29 @@ die;*/
 		$stm_raise->execute();
 	}
 
-	if($productCategory == 'onsite'){
+	// return data for jquery ajax //////////////////////////////////////////////////////////////////
+	$return = array();
 
-		$return = "<tr>
-				<td>" . date("d/m/Y H:i", strtotime($orderDate)) . "</td>
-				<td><a href='#'' class='opener'>$orderId</a></td>
-				<td>
-					<div class='list arrowBlue'>
-						<ul>
-							<li>$productName</li>";
-
-		if($productCategory2 == 'onsite'){
-			$return .= "<li>$productName2</li>";
-		}
-
-		$return .= "				
-						</ul>
-					</div>
-				</td>
-				<td>\$$orderProduct</td>
-				<td>$customerFirstName $customerLastName</td>
-			</tr>";
-			
-		echo $return;
-	} else {
-		return false;
+	$return['productName'] 		= $productName;
+	$return['productCategory'] 	= $productCategory;
+	$return['customerFirstName']= $customerFirstName;
+	$return['customerLastName']	= $customerLastName;
+	
+	if(isset($productCategory2)){
+		$return['productName2'] 		= $productName2;
+		$return['productCategory2'] 	= $productCategory2;
 	}
+
+	$return['orderDate']	= date("d/m/Y H:i", strtotime($orderDate));
+	$return['orderId']   	= $orderId;
+	$return['productName'] 	= $productName;
+	
+	// total price
+	$return['orderProduct'] = $orderProduct;
+	/*$return['productPrice'] 	= $productPrice;
+	$return['productPrice2']	= $productPrice2;*/
+
+	print json_encode($return);
 	
 	
 ?>

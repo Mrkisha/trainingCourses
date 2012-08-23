@@ -464,33 +464,118 @@
 				url: 'API/training-other-add-processing.php',
 				type: "POST",
 				data: $("#wizForm").serialize(),
-				dataType: 'html',
+				dataType: 'json',
 				success: function(data) {
 					console.log(data);
 
+					if(data['productCategory'] == 'onsite'){
+						var output1 = "<tr><td>" + data['orderDate'] + "</td><td><a href='#'' class='opener'>" + data['orderId'] + "</a></td><td><div class='list arrowBlue'><ul><li>" + data['productName'] + "</li>";
+
+						//check if productCategory exists and is 'onsite'
+						if(data['productCategory2'] !== undefined){
+							if(data['productCategory2'] == 'onsite'){
+								output1 = output1 + "<li>" + data['productName2'] + "</li>";
+							} else {
+								$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory2 option:selected').html() + " with " + data['orderId'] + "</p></div>");
+							}
+						}
+
+						output1 = output1 + "</ul></div></td><td>$" + data['orderProduct'] + "</td><td>" + data['customerFirstName'] + " " + data['customerLastName'] + "</td></tr>";
+
+						
+
+					} else {
+						$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory1 option:selected').html() + " with " + data['orderId'] + "</p></div>");
+
+						if(data['productCategory2'] !== undefined){
+							if(data['productCategory2'] == 'onsite'){
+								var output1 ="<tr><td>" + data['orderDate'] + "</td><td><a href='#'' class='opener'>" + data['orderId'] + "</a></td><td><div class='list arrowBlue'><ul><li>" + data['productName2'] + "</li></ul></div></td><td>$" + data['orderProduct'] + "</td><td>" + data['customerFirstName'] + " " + data['customerLastName'] + "</td></tr>";
+							} else {
+								$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory2 option:selected').html() + " with " + data['orderId'] + "</p></div>");
+							}
+						}
+					}
+					$(".tableStatic").append(output1);
+					$(".nSuccess").delay(4000).animate({ height: 0, opacity: 0 }, 'slow');
+
+
+					/*alert(data['orderId']);
+					alert(data['option']);*/
+					/*if(data['option'] == 1){
+						// check if first productName is onsite
+						if($("#productCategory").val() = "onsite"){
+							alert("prodictName = onsite");
+						} else {
+							alert("prodictName != onsite");
+						}
+
+						if($("#productName2").val() == "onsite"){
+							alert("prodictName2 = onsite");
+						} else {
+							alert("prodictName2 != onsite");
+						}
+
+						alert(data['option']);
+						var html_data_part1 = "<tr><td>" + data['orderDate'] + "</td><td><a href='#'' class='opener'>" + data['orderId'] + "</a></td><td><div class='list arrowBlue'><ul><li>" + data['productName'] + "</li>";
+
+						if(data['productName2'].length > 0){
+							alert("Product2");
+						}
+
+						var html_data_part3 = "</ul></div></td><td>" + data['orderProduct'] + "</td><td>$customerFirstName $customerLastName</td></tr>";
+					} else {
+						// close dialogbox 
+						$( "#dialog-message" ).dialog("close");
+						// add success for first product
+						$(".head:nth-child(1)").fadeIn("slow").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory option:selected').html() + " with " + data['orderId'] + "</p></div>");
+						// add success for  product 2 if exists
+						if(data['productName2'].length > 0){
+							$(".head:nth-child(1)").fadeIn("slow").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory2 option:selected').html() + " with " + data['orderId'] + "</p></div>");
+						}
+						
+						// fade out success message
+						$(".nSuccess").delay(4000).animate({ height: 0, opacity: 0 }, 'slow');
+
+					}*/
+					/*var products = */
 					// if at least 1 course is onsite we insert it into table on page
-					if(data != ''){
+					/*if($.isNumeric(data) = false){
+						alert("numeric");
 						$(".tableStatic").append(data);
 						$( "#dialog-message" ).dialog("open");
 
 						// check if product category is not onsite, if so insert data above table
 						if($("#productCategory").val() != 'onsite'){
 							alert("Product 1: " + $("#productCategory").val());
+							// insertAfter .head and before table
+							
+
 						}
 
 						// check if product category 2 is not onsite, if so insert data above table
 						if($("#productCategory2").val() != 'onsite'){
 							alert("Product 2: " + $("#productCategory").val());
 						}
-					} else {
-						/*alert($("#productCategory").val());
+					} else {*/
+						///////////////////////////////////
+						
+
+						//////////////////////////
+					/*	alert(1);*/
+						/*alert($("#productCategory").val()); option:selected').html()
 						alert($("#productCategory2").val());*/
-						/*<div class="nNote nSuccess hideit">
-    						<p><strong>SUCCESS: </strong>You have added a {course-name} with orderId {orderId}</p>
-						</div>*/
-					}
+						/*$( "#dialog-message" ).dialog("close");
+						// here we get orderID from ajax
+						$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory option:selected').html() + " with orderId</p></div>");
+						$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory2 option:selected').html() + " with orderId</p></div>");
+						// fade out success message
+						$(".nSuccess").delay(2500).animate({ height: 0, opacity: 0 }, 'slow');*/
+
+
+						// /*"<div class='nNote nSuccess hideit'><p><strong>SUCCESS: </strong>You have added a {course-name} with orderId" + $("tr:last td:eq(1) a").text() + "</p></div>"*/	
+					/*}*/
 					
-					alert($(".tableStatic:last-child td td").next().text());
+					/*console.log($("tr:last td:eq(1) a").text());*/
 				}
 			});
 

@@ -171,10 +171,10 @@
 		
 	</div>
 </div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="js/plugins/spinner/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="js/plugins/spinner/ui.spinner.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/plugins/wysiwyg/jquery.wysiwyg.js"></script>
 <script type="text/javascript" src="js/plugins/wysiwyg/wysiwyg.image.js"></script>
 <script type="text/javascript" src="js/plugins/wysiwyg/wysiwyg.link.js"></script>
@@ -227,7 +227,7 @@
 		var count_blueBtn;
 		
 		$('.opener').live("click", function(){
-			
+			alert(1);
 			add_class_to_row = $(this).parent().parent();
 			$.post("API/generate-dialogbox-other.php",  {orderId: $(this).text()}, function(data){
 				console.log(data);
@@ -237,8 +237,34 @@
 				count_blueBtn = $(".blueBtn").length;
 			});
 
+			
+
 			return false;
 		});
+
+		// set date pickers ///////////////////////////////////////////////////////////////////
+		$("#productStartDate").live("click", function(){
+			$("#productStartDate").datepicker().datepicker( "show" );             
+			//alert(1);
+		});
+
+		$("#productEndDate").live("click", function(){
+			$("#productEndDate").datepicker().datepicker( "show" );             
+			//alert(1);
+		});
+
+		$("#productStartDate2").live("click", function(){
+			$("#productStartDate2").datepicker().datepicker( "show" );             
+			//alert(1);
+		});
+
+		$("#productEndDate2").live("click", function(){
+			$("#productEndDate2").datepicker().datepicker( "show" );             
+			//alert(1);
+		});
+		///////////////////////////////////////////////////////////////////////////////////////
+
+		$('#ui-datepicker-div').css('clip', 'auto');
 			
 		// open new course
 		$('.basicBtn').live("click", function(){
@@ -272,6 +298,25 @@
 
 						}
 				});
+				
+				// set form elemets ///////////////////////////////////////////////////////////////////////////////////////
+				$("select, input:checkbox, input:radio, input:file").uniform();
+				$('.onlyNums input').autotab_magic().autotab_filter('numeric');
+				$('.timepicker').timeEntry({
+
+					show24Hours: true, // 24 hours format
+
+					showSeconds: true, // Show seconds?
+
+					spinnerImage: 'images/ui/spinnerUpDown.png', // Arrows image
+
+					spinnerSize: [17, 26, 0], // Image size
+
+					spinnerIncDecOnly: true // Only up and down arrows
+				});
+
+
+
 				
 				//===== Form to Wizard plugin =====//	
 
@@ -482,7 +527,6 @@
 
 						output1 = output1 + "</ul></div></td><td>$" + data['orderProduct'] + "</td><td>" + data['customerFirstName'] + " " + data['customerLastName'] + "</td></tr>";
 
-						
 
 					} else {
 						$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory1 option:selected').html() + " with " + data['orderId'] + "</p></div>");
@@ -498,84 +542,6 @@
 					$(".tableStatic").append(output1);
 					$(".nSuccess").delay(4000).animate({ height: 0, opacity: 0 }, 'slow');
 
-
-					/*alert(data['orderId']);
-					alert(data['option']);*/
-					/*if(data['option'] == 1){
-						// check if first productName is onsite
-						if($("#productCategory").val() = "onsite"){
-							alert("prodictName = onsite");
-						} else {
-							alert("prodictName != onsite");
-						}
-
-						if($("#productName2").val() == "onsite"){
-							alert("prodictName2 = onsite");
-						} else {
-							alert("prodictName2 != onsite");
-						}
-
-						alert(data['option']);
-						var html_data_part1 = "<tr><td>" + data['orderDate'] + "</td><td><a href='#'' class='opener'>" + data['orderId'] + "</a></td><td><div class='list arrowBlue'><ul><li>" + data['productName'] + "</li>";
-
-						if(data['productName2'].length > 0){
-							alert("Product2");
-						}
-
-						var html_data_part3 = "</ul></div></td><td>" + data['orderProduct'] + "</td><td>$customerFirstName $customerLastName</td></tr>";
-					} else {
-						// close dialogbox 
-						$( "#dialog-message" ).dialog("close");
-						// add success for first product
-						$(".head:nth-child(1)").fadeIn("slow").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory option:selected').html() + " with " + data['orderId'] + "</p></div>");
-						// add success for  product 2 if exists
-						if(data['productName2'].length > 0){
-							$(".head:nth-child(1)").fadeIn("slow").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory2 option:selected').html() + " with " + data['orderId'] + "</p></div>");
-						}
-						
-						// fade out success message
-						$(".nSuccess").delay(4000).animate({ height: 0, opacity: 0 }, 'slow');
-
-					}*/
-					/*var products = */
-					// if at least 1 course is onsite we insert it into table on page
-					/*if($.isNumeric(data) = false){
-						alert("numeric");
-						$(".tableStatic").append(data);
-						$( "#dialog-message" ).dialog("open");
-
-						// check if product category is not onsite, if so insert data above table
-						if($("#productCategory").val() != 'onsite'){
-							alert("Product 1: " + $("#productCategory").val());
-							// insertAfter .head and before table
-							
-
-						}
-
-						// check if product category 2 is not onsite, if so insert data above table
-						if($("#productCategory2").val() != 'onsite'){
-							alert("Product 2: " + $("#productCategory").val());
-						}
-					} else {*/
-						///////////////////////////////////
-						
-
-						//////////////////////////
-					/*	alert(1);*/
-						/*alert($("#productCategory").val()); option:selected').html()
-						alert($("#productCategory2").val());*/
-						/*$( "#dialog-message" ).dialog("close");
-						// here we get orderID from ajax
-						$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory option:selected').html() + " with orderId</p></div>");
-						$(".head:nth-child(1)").after("<div class='nNote nSuccess hideit' style='margin: 0'><p><strong>SUCCESS </strong>You have added a " + $('#productCategory2 option:selected').html() + " with orderId</p></div>");
-						// fade out success message
-						$(".nSuccess").delay(2500).animate({ height: 0, opacity: 0 }, 'slow');*/
-
-
-						// /*"<div class='nNote nSuccess hideit'><p><strong>SUCCESS: </strong>You have added a {course-name} with orderId" + $("tr:last td:eq(1) a").text() + "</p></div>"*/	
-					/*}*/
-					
-					/*console.log($("tr:last td:eq(1) a").text());*/
 				}
 			});
 
@@ -594,6 +560,19 @@
 				parent.append(data_onsite);
 			});
 			return false;
+		});
+
+		$('.timepicker').timeEntry({
+
+			show24Hours: true, // 24 hours format
+
+			showSeconds: true, // Show seconds?
+
+			spinnerImage: 'images/ui/spinnerUpDown.png', // Arrows image
+
+			spinnerSize: [17, 26, 0], // Image size
+
+			spinnerIncDecOnly: true // Only up and down arrows
 		});
 
 	});

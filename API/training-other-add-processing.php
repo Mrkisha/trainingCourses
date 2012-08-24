@@ -483,12 +483,10 @@ die;*/
 	$return['orderDate']	= date("d/m/Y H:i", strtotime($orderDate));
 	$return['orderId']   	= $orderId;
 	$return['productName'] 	= $productName;
-	
-	// total price
 	$return['orderProduct'] = $orderProduct;
 	/*$return['productPrice'] 	= $productPrice;
 	$return['productPrice2']	= $productPrice2;*/
-
+	
 	print json_encode($return);
 	
 	

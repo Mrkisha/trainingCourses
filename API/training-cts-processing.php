@@ -19,4 +19,11 @@
 	$stm->bindParam(":courseName", $_POST['courseName']);
 	$stm->execute();
 
-	echo 
+	/*echo "INSERT INTO `cts_courses`
+							(
+								`courseName`
+							) VALUES (
+								'{$_POST['courseName']}'
+							)";*/
+	echo $db->lastInsertId();
+

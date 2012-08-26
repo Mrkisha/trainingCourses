@@ -157,7 +157,7 @@
 
 				<div class="widget">
 					<div class="head"><h5>Course names</h5></div>
-					<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
+					<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic" id="tableCourses">
 						<thead>
 							<tr>
 							  <td>Course Name</td>
@@ -165,10 +165,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Course name 1</td>
-								<td align="center"><a href='#'><img src='images/icons/dark/close.png' /></a></td>
-							</tr>
+							<?php include 'content/courses-names.php'; ?>
 						</tbody>
 					</table>                    
 				</div>
@@ -281,13 +278,12 @@
 		// submiting new course to db
 		$('#cName').live("keydown", function(e){
 			if(e.keyCode == 13){
-
-				if ($("#cName").length > 0){
-					$.post("API/training-cts-processing.php", {courseName: $("#cName").val()}, function(courseName){
-						
-					});
-				}
-
+			
+				$.post("API/training-cts-processing.php", {courseName: $("#cName").val()}, function(courseName){
+					console.log(courseName);
+					$("#tableCourses tbody").append("<tr><td>" + $("#cName").val() + "</td><td align='center'><a href='#''><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseName + "'></td></tr>");
+					$("#cName").val("");
+				});
 				return false;
 			}
 			

@@ -100,7 +100,7 @@
 						<div class="formRight ">
 						<select name="courseName" id="courseName" >
 							<option value="">Please select..</option>
-							<option value="123">Course name 1</option>
+							<?php include 'content/courses-name-listbox.php'; ?>	
 						</select>
 						</div>
 						<div class="fix"></div>
@@ -110,7 +110,7 @@
 						<div class="formRight ">
 						<select name="courseLocation" id="courseLocation" >
 							<option value="">Please select..</option>
-							<option value="123">Course name 1</option>
+							<?php include 'content/courses-location-listbox.php'; ?>	
 						</select>
 						</div>
 						<div class="fix"></div>
@@ -144,7 +144,7 @@
 					</tr>
 				</thead>
 					<tbody>
-
+						<?php include 'content/courses-locations-table.php'; ?>
 					</tbody>
 				</table>
 			</div>
@@ -156,7 +156,7 @@
 				<!-- Training statistics -->
 
 				<div class="widget">
-					<div class="head"><h5>Course names</h5></div>
+					<div class="head"><h5 class="iChart8">Course names</h5></div>
 					<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic" id="tableCourses">
 						<thead>
 							<tr>
@@ -183,7 +183,7 @@
 
 				<div class="widget">
 					<div class="head"><h5 class="iChart8">Course locations</h5></div>
-						<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic">
+						<table cellpadding="0" cellspacing="0" width="100%" class="tableStatic" id='courseLocations'>
 						<thead>
 							<tr>
 							  <td>Location</td>
@@ -191,10 +191,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Location name 1</td>
-								<td align="center"><a href='#'><img src='images/icons/dark/close.png' /></a></td>
-							</tr>
+							<?php include 'content/courses-locations.php'; ?>
 						</tbody>
 					</table>                    
 				</div>
@@ -278,17 +275,134 @@
 		// submiting new course to db
 		$('#cName').live("keydown", function(e){
 			if(e.keyCode == 13){
-			
-				$.post("API/training-cts-processing.php", {courseName: $("#cName").val()}, function(courseName){
-					console.log(courseName);
-					$("#tableCourses tbody").append("<tr><td>" + $("#cName").val() + "</td><td align='center'><a href='#''><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseName + "'></td></tr>");
-					$("#cName").val("");
-				});
+				if($(this).val() != ''){
+					var cName = $("#cName").val();
+					$.post("API/training-cts-course-processing.php", {courseName: $("#cName").val()}, function(courseName){
+						console.log(courseName);
+						$("#tableCourses tbody").append("<tr><td>" + cName + "</td><td align='center'><a href='#''><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseName + "'></td></tr>");
+						$("#cName").val("");
+
+						// add new course into course name combobox #courseName
+						$("#courseName").append("<option value='" + courseName + "'>" + cName + "</option>");
+					});
+				}
 				return false;
 			}
 			
 		});	
 
+		// submit new location to db
+		$('#cLocation').live("keydown", function(e){
+			if(e.keyCode == 13){
+				if($(this).val() != ''){
+					var cLocation = $("#cLocation").val();
+					$.post("API/training-cts-location-processing.php", {locationName: $("#cLocation").val()}, function(courseLocation){
+						console.log(courseLocation);
+						$("#courseLocations tbody").append("<tr><td>" + cLocation + "</td><td align='center'><a href='#''><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseLocation + "'></td></tr>");
+						$("#cLocation").val("");
+
+						// add new course into course name combobox #courseName
+						$("#courseLocation").append("<option value='" + courseLocation + "'>" + cLocation + "</option>");
+					});
+				}
+				return false;
+			}
+			
+		});	
+
+		// remove course name
+		$(".deleteName").live("click", function(){
+			var clicked = $(this);
+			var courseID = $(this).next().val()
+			$.ajax({
+				url: 'API/training-cts-course-delete.php',
+				type: "POST",
+				data: {courseID: clicked.next().val()},
+				dataType: 'json',
+				success: function(data) {
+					clicked.parent().parent().remove();
+
+					// remove option from #courseName
+					$("#courseName option[value='" + courseID + "']").remove();
+				}
+			});
+			return false;
+		});
+
+		// remove course location
+		$(".deleteLocation").live("click", function(){
+			var clicked = $(this);
+			var locationID = $(this).next().val()
+			$.ajax({
+				url: 'API/training-cts-location-delete.php',
+				type: "POST",
+				data: {locationID: clicked.next().val()},
+				dataType: 'json',
+				success: function(data) {
+					clicked.parent().parent().remove();
+
+					// remove option from #courseLocation
+					$("#courseLocation option[value='" + locationID + "']").remove();
+				}
+			});
+			return false;
+		});
+
+
+		// submit data for cts_courses_locations table
+		$(".blueBtn").live("click", function(){
+			$.ajax({
+				url: 'API/training-cts-course-location-processing.php',
+				type: "POST",
+				data: $("form").serialize(),
+				dataType:'json',
+					success: function(data) {
+					// console.log(data);
+					if($(".dataTables_empty").length > 0){
+						$(".dataTables_empty").parent().remove();
+					}
+					//$("#example tr").lengthconsole.log($("#example tr").length);
+					var class_name;
+					if(isEven($("#example tr").length) === true){
+						class_name = 'even';
+					} else {
+						class_name = 'odd';
+					}
+					$("#example tbody").append("<tr class='"+class_name+"'><td class=' sorting_1'>"+data['courseStart']+"</td><td>" + $("#courseName option[value='"+$("#courseName").val()+"']").text() + "</td><td>"+$("#courseLocation option[value='"+$("#courseLocation").val()+"']").text()+"</td><td align='center'><a href='#' class='deleteCourseLocation'><img src='images/icons/dark/close.png'></a><input type='hidden' name='locationID' value='"+data['id']+"'></td></tr>");
+
+				}
+			});
+
+			return false;
+		});
+
+		// delete table row
+		$(".deleteCourseLocation").live("click", function(){
+			var clicked = $(this);
+			$.ajax({
+				url: 'API/training-cts-course-location-delete.php',
+				type: "POST",
+				data: {locationID: clicked.next().val()},
+				dataType:'json',
+					success: function(data) {
+					console.log(data);
+					// remove removed row
+					clicked.parent().parent().remove();
+
+					// change the classes if there are rows after deleted one
+				}
+			});
+
+			return false;
+		});
+
+		// checks wheather number is even or odd
+		function isEven(value) {
+			if (value%2 == 0)
+				return true;
+			else
+				return false;
+		}
 
 		
 	});

@@ -117,7 +117,7 @@
 					<div class="left">
 
 						<div class="rowElem noborder">
-							<label>Use same details for invoicing: </label>
+							<label>Use same details:</label>
 							<div class="formRight">
 								<input type="checkbox" id="check1" name="chbox" value="1"/><label for="check1" value="1"></label>
 							</div>
@@ -250,7 +250,7 @@
 						<div class="rowElem">
 							<label>Start Date:<span class="req">*</span></label>
 							<div class="formRight">
-								<input type="text" name="productStartDate" id="productStartDate" class="" value="<?php echo date("d/m/Y"); ?>"/>
+								<input type="text" name="productStartDate" id="productStartDate" class="datepicker" value="<?php echo date("d/m/Y"); ?>"/>
 								<input type="text" name="productStartTime" class="timepicker" size="10" value="<?php echo "9:00:00"; ?>">
 							</div>
 							<div class="fix"></div>
@@ -259,7 +259,7 @@
 						<div class="rowElem" id="hide">
 							<label>End Date:<span class="req">*</span></label>
 							<div class="formRight">
-								<input type="text" name="productEndDate" id="productEndDate" class="" value="<?php echo date("d/m/Y"); ?>"/> 
+								<input type="text" name="productEndDate" id="productEndDate" class="datepicker" value="<?php echo date("d/m/Y"); ?>"/> 
 								<input type="text" name="productEndTime" class="timepicker" size="10" value="<?php echo "17:00:00"; ?>">
 							</div>
 							<div class="fix"></div>

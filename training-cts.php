@@ -92,7 +92,7 @@
 		<!-- Static table -->
 
 
-			<div class="widget first">
+			<div class="widget first CTS">
 				<form action="" method="post" class="mainForm">
                     <div class="head"><h5>Add a CTS course to the NCSI website</h5></div>
 					<div class="rowElem noborder">
@@ -125,7 +125,9 @@
 					</div>
 
 					<div class="rowElem">
-						<input class="blueBtn" id="" value="Submit" type="submit" />
+						<label></label>
+						<div class="formRight" style="margin-top:0 !important"><input class="blueBtn" id="" value="Submit" type="submit" /></div>
+						<div class="fix"></div>
 					</div>
                 </form>
             </div>
@@ -138,9 +140,9 @@
 				<thead>
 					<tr>
 						<th width="20%">Date</th>
-						<th width="25%">Name</th>
-						<th width="25%">Location</th>
-						<th width="20%">Remove</th>
+						<th width="30%">Name</th>
+						<th width="30%">Location</th>
+						<th width="10%">Remove</th>
 					</tr>
 				</thead>
 					<tbody>
@@ -279,7 +281,7 @@
 					var cName = $("#cName").val();
 					$.post("API/training-cts-course-processing.php", {courseName: $("#cName").val()}, function(courseName){
 						console.log(courseName);
-						$("#tableCourses tbody").append("<tr><td>" + cName + "</td><td align='center'><a href='#''><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseName + "'></td></tr>");
+						$("#tableCourses tbody").append("<tr><td>" + cName + "</td><td align='center'><a href='#' class='deleteName'><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseName + "'></td></tr>");
 						$("#cName").val("");
 
 						// add new course into course name combobox #courseName
@@ -298,7 +300,7 @@
 					var cLocation = $("#cLocation").val();
 					$.post("API/training-cts-location-processing.php", {locationName: $("#cLocation").val()}, function(courseLocation){
 						console.log(courseLocation);
-						$("#courseLocations tbody").append("<tr><td>" + cLocation + "</td><td align='center'><a href='#''><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseLocation + "'></td></tr>");
+						$("#courseLocations tbody").append("<tr><td>" + cLocation + "</td><td align='center'><a href='#' class='deleteLocation'><img src='images/icons/dark/close.png'></a><input type='hidden' name='courseID' value='" + courseLocation + "'></td></tr>");
 						$("#cLocation").val("");
 
 						// add new course into course name combobox #courseName
@@ -368,7 +370,7 @@
 					} else {
 						class_name = 'odd';
 					}
-					$("#example tbody").append("<tr class='"+class_name+"'><td class=' sorting_1'>"+data['courseStart']+"</td><td>" + $("#courseName option[value='"+$("#courseName").val()+"']").text() + "</td><td>"+$("#courseLocation option[value='"+$("#courseLocation").val()+"']").text()+"</td><td align='center'><a href='#' class='deleteCourseLocation'><img src='images/icons/dark/close.png'></a><input type='hidden' name='locationID' value='"+data['id']+"'></td></tr>");
+					$("#example tbody").append("<tr><td class=' sorting_1'>"+data['courseStart']+"</td><td>" + $("#courseName option[value='"+$("#courseName").val()+"']").text() + "</td><td>"+$("#courseLocation option[value='"+$("#courseLocation").val()+"']").text()+"</td><td align='center'><a href='#' class='deleteCourseLocation'><img src='images/icons/dark/close.png'></a><input type='hidden' name='locationID' value='"+data['id']+"'></td></tr>");
 
 				}
 			});
@@ -388,8 +390,6 @@
 					console.log(data);
 					// remove removed row
 					clicked.parent().parent().remove();
-
-					// change the classes if there are rows after deleted one
 				}
 			});
 

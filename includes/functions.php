@@ -23,26 +23,25 @@
 		$page = basename($_SERVER['SCRIPT_NAME']);
 
 		// then we run the query to see if user has access to the page
-		$stm = $db->query("SELECT
-								`users`.`username`
-								, `users`.`password`
-								, `users`.`permission`
-								, `pages`.`page`
-								, `users_pages`.`userID`
-								, `users_pages`.`pageID`
-							FROM `pages`
-								INNER JOIN `users_pages` ON (`pages`.`pageID` = `users_pages`.`pageID`)
-								INNER JOIN `users` ON (`users`.`userID` = `users_pages`.`userID`)
-							WHERE username = '{$_SESSION['user']['username']}' AND page = '$page'");
-		$stm->execute();
-		$data = $stm->rowCount();
-
-		if($data != 1){
-			if($_SESSION['user']['permission'] == 1){
-				redirect_to('training-public.php');
-			} elseif ($_SESSION['user']['permission'] == 2) {
-				redirect_to('finance-raise-invoices.php');
-			}
+		$stm_page = $db->prepare("SELECT 
+									`users`.`username` ,  
+									`users`.`permission` ,  
+									`pages`.`pageID` ,  
+									`pages`.`page` ,
+									`pages`.`description`
+								FROM  `pages` 
+									INNER JOIN  `users_pages` ON (`pages`.`pageID` =  `users_pages`.`pageID`) 
+									INNER JOIN  `users` ON (`users`.`userID` =  `users_pages`.`userID`) 
+								WHERE  `users`.`username` =  :username AND `pages`.`description` = :page
+								ORDER BY  `pages`.`pageID` ASC
+								LIMIT 0, 1");
+		$stm_page->bindParam(":username", $_SESSION['user']['username']);
+		$stm_page->bindParam(":page", $page);
+		$stm_page->execute();
+		$data_page = $stm_page->fetchAll(PDO::FETCH_ASSOC);
+		
+		if($data_page){
+			redirect_to($data_page[0]['page']);
 		}
 	}
 	

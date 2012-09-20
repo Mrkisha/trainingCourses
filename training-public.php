@@ -31,7 +31,8 @@
 <div id="topNav">
 	<div class="fixed">
 		<div class="wrapper">
-			<div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span>Hello, <?php echo ucfirst($_SESSION['user']['username']) ?>!</span></div>
+			<div class="welcome">
+				<a href="#" title=""><img src="images/userPic.png" alt="" /></a><span>Hello, <?php echo ucfirst($_SESSION['user']['username']) ?>!</span></div>
 			<div class="userNav">
 				<ul>
 					<li><a href="index.php" title=""><img src="images/icons/topnav/logout.png" alt="" /><span>Logout</span></a></li>

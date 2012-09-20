@@ -27,11 +27,24 @@
 		$_SESSION['user']['username'] = $data[0]['username'];
 		$_SESSION['user']['permission'] = $data[0]['permission'];
 		
-		if($data[0]['permission'] == 1 || $data[0]['permission'] == 3){
-			redirect_to('training-public.php');
-		} else {
-			redirect_to('finance-public.php');
-		}
+		// check for which pages user has permission to access
+		$stm_page = $db->prepare("SELECT 
+										`users`.`username` ,  
+										`users`.`permission` ,  
+										`pages`.`pageID` ,  
+										`pages`.`page` 
+									FROM  `pages` 
+										INNER JOIN  `users_pages` ON (`pages`.`pageID` =  `users_pages`.`pageID`) 
+										INNER JOIN  `users` ON (`users`.`userID` =  `users_pages`.`userID`) 
+									WHERE  `users`.`username` =  :username
+									ORDER BY  `pages`.`pageID` ASC ");
+		$stm_page->bindParam(":username", $username);
+		$stm_page->execute();
+		$data_page = $stm_page->fetchAll(PDO::FETCH_ASSOC);
+		
+
+		redirect_to($data_page[0]['page']);
+		
 		
 	} else {
 		redirect_to('index.php');
